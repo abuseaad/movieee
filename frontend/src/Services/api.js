@@ -5,7 +5,7 @@ export const getPopularMovies = async () => {
     const response = await fetch (`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
     const data = await response.json()
     return data.results
-    
+
 };
 
 export const searchMovies = async (query) => {
@@ -14,5 +14,21 @@ export const searchMovies = async (query) => {
     }`);
     const data = await response.json()
     return data.results
-    
+
 };
+export const getMovieTrailer = async (movieId) => {
+    const response = await fetch(
+      `${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`       
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not load trailer");
+    }
+
+    const data = await response.json();
+
+    return data.results.find(
+      (video) => video.site === "YouTube" && video.type === "Trailer"
+    );
+  };
+

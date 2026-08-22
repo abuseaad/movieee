@@ -122,3 +122,33 @@
     font-size: 1.2rem;
   }
 }
+.trailer-btn {
+  border: none;
+  border-radius: 6px;     
+  padding: 0.5rem 0.75rem;
+  color: white;
+  background: #e50914;    
+  cursor: pointer;        
+}
+
+.trailer-btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.trailer-player {
+  padding: 1rem;
+  background: #111;       
+}
+
+.trailer-player iframe {  
+  border: 0;
+}
+
+.trailer-error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: #ff9b9b;
+  background: #2a1111;
+  font-size: 0.9rem;
+}
