@@ -11,11 +11,6 @@ function MovieCard({ movie }) {
     const [isLoadingTrailer, setIsLoadingTrailer] = useState(false);
 
     async function onPlayTrailerClick() {
-        if (trailerKey) {
-            setTrailerKey(null);
-            return;
-        }
-
         setIsLoadingTrailer(true);
         setTrailerError(null);
 
@@ -36,6 +31,11 @@ function MovieCard({ movie }) {
         }
     }
 
+    function onStopTrailerClick() {
+        setTrailerKey(null);
+        setTrailerError(null);
+    }
+
     function onFavoriteClick(e) {
         e.preventDefault()
         if (favorite) {
@@ -45,41 +45,60 @@ function MovieCard({ movie }) {
         }
     }
 
-    return <div className="movie-card">
-        {trailerKey && (
-            <div className="trailer-player">
-                <iframe
-                    width="100%"
-                    height="250"
-                    src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
-                    title={`${movie.title} trailer`}
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowFullScreen
-                />
-            </div>
-        )}
-        {trailerError && <p className="trailer-error">{trailerError}</p>}
-        <div className="movie-poster">
-            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
-            <div className="movie-overlay">
-                <button className={`favorite-btn ${favorite ? "active" : ""}`} onClick={onFavoriteClick}>
+    return (
+        <div className="movie-card">
+            <div className="movie-poster">
+                {trailerKey ? (
+                    // Trailer replaces the poster inside the card
+                    <iframe
+                        className="trailer-frame"
+                        src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&rel=0`}
+                        title={`${movie.title} trailer`}
+                        allow="autoplay; encrypted-media; picture-in-picture"
+                        allowFullScreen
+                    />
+                ) : (
+                    <>
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                            alt={movie.title}
+                        />
+                        <div className="movie-overlay" />
+
+                        {/* Always visible: centered in the lower third of the poster */}
+                        <button
+                            className="trailer-btn play-btn"
+                            onClick={onPlayTrailerClick}
+                            disabled={isLoadingTrailer}
+                        >
+                            {isLoadingTrailer ? "Loading..." : "▶ Play Trailer"}
+                        </button>
+                    </>
+                )}
+
+                <button
+                    className={`favorite-btn ${favorite ? "active" : ""}`}
+                    onClick={onFavoriteClick}
+                >
                     ♥
                 </button>
-                <button className="trailer-btn" onClick={onPlayTrailerClick} disabled={isLoadingTrailer}>
-                    {isLoadingTrailer ? "Loading..." : "▶ Play Trailer"}
-                </button>
+            </div>
+
+            <div className="movie-info">
+                <h3>{movie.title}</h3>
+                <p>{movie.release_date?.split("-")[0]}</p>
+
+                {trailerError && <p className="trailer-error">{trailerError}</p>}
+
+                {/* Stop button: lower part of the card while the trailer plays */}
                 {trailerKey && (
-                    <button className="trailer-btn" onClick={() => setTrailerKey(null)}>
-                        Stop Trailer
+                    <button className="trailer-btn stop-btn" onClick={onStopTrailerClick}>
+                        ■ Stop Trailer
                     </button>
                 )}
             </div>
         </div>
-        <div className="movie-info">
-            <h3>{movie.title}</h3>
-            <p>{movie.release_date?.split("-")[0]}</p>
-        </div>
-    </div>
+    )
 }
 
 export default MovieCard

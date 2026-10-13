@@ -13,10 +13,13 @@
   transform: translateY(-5px);
 }
 
+/* Height reduced by 20%: the old ratio was 2/3 (height = 1.5 x width),
+   the new one is 5/6 (height = 1.2 x width). */
 .movie-poster {
   position: relative;
-  aspect-ratio: 2/3;
+  aspect-ratio: 5 / 6;
   width: 100%;
+  background: #000;
 }
 
 .movie-poster img {
@@ -25,33 +28,31 @@
   object-fit: cover;
 }
 
+/* Soft dark gradient at the bottom so the Play button is easy to read.
+   It never blocks clicks. */
 .movie-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.8)
+    rgba(0, 0, 0, 0) 55%,
+    rgba(0, 0, 0, 0.75)
   );
-  opacity: 0;
-  transition: opacity 0.2s;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1rem;
+  pointer-events: none;
 }
 
-.movie-card:hover .movie-overlay {
-  opacity: 1;
+.trailer-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .favorite-btn {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  z-index: 2;
   color: white;
   font-size: 1.5rem;
   padding: 0.5rem;
@@ -107,6 +108,62 @@
   margin-top: auto;
 }
 
+/* ---------- Trailer buttons ---------- */
+.trailer-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  color: white;
+  background: #e50914;
+  cursor: pointer;
+}
+
+.trailer-btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+/* Fixed in the middle of the lower third of the poster
+   (the lower third is centered at 83.3% of the poster height) */
+.play-btn {
+  position: absolute;
+  left: 50%;
+  top: 83.33%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  max-width: 240px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+}
+
+.play-btn:hover {
+  background: #f40612;
+}
+
+/* Stop button sits at the bottom of the card */
+.stop-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  background: #333;
+  border: 1px solid #555;
+}
+
+.stop-btn:hover {
+  background: #444;
+}
+
+.trailer-error {
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  color: #ff9b9b;
+  background: #2a1111;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 768px) {
   .movie-card {
     font-size: 0.9rem;
@@ -121,34 +178,4 @@
     height: 32px;
     font-size: 1.2rem;
   }
-}
-.trailer-btn {
-  border: none;
-  border-radius: 6px;     
-  padding: 0.5rem 0.75rem;
-  color: white;
-  background: #e50914;    
-  cursor: pointer;        
-}
-
-.trailer-btn:disabled {
-  cursor: wait;
-  opacity: 0.7;
-}
-
-.trailer-player {
-  padding: 1rem;
-  background: #111;       
-}
-
-.trailer-player iframe {  
-  border: 0;
-}
-
-.trailer-error {
-  margin: 0;
-  padding: 0.75rem 1rem;
-  color: #ff9b9b;
-  background: #2a1111;
-  font-size: 0.9rem;
 }

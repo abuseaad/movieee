@@ -1,16 +1,76 @@
-# React + Vite
+# 🎬 Movie App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A movie browsing app built with React and the TMDB API. Browse popular movies, search by title, save favorites, and watch trailers right inside the movie card.
 
-Currently, two official plugins are available:
+🌐 **Live demo:** [your-live-url]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- Popular movies loaded from TMDB on the home page
+- Search movies by title
+- Favorites page, saved in the browser (`localStorage`) so they stay after refresh
+- **Play Trailer** button on every card; the trailer plays inside the card and a **Stop** button returns to the poster
+- Loading and error messages
+- Responsive grid layout
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+React 19 · Vite 8 · React Router 7 · TMDB API · Context API · CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Getting Started
+
+**Requirements:** Node.js 20+ and a free [TMDB API key](https://www.themoviedb.org/settings/api).
+
+```bash
+git clone https://github.com/sadikjemal/MyFavoriteMedicalVideos.git
+cd MyFavoriteMedicalVideos/frontend
+npm install
+```
+
+Create a `.env` file inside the `frontend` folder:
+
+```env
+VITE_TMDB_API_KEY=your_tmdb_api_key_here
+```
+
+Start the app:
+
+```bash
+npm run dev
+```
+
+Open <http://localhost:5173>.
+
+> Never commit your `.env` file. It is already in `.gitignore`.
+
+## 📜 Scripts
+
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run ESLint |
+
+## 📁 Project Structure
+
+```text
+frontend/src/
+├── components/
+│   ├── contexts/MovieContext.jsx   # Favorites state (localStorage)
+│   ├── MovieCard.jsx               # Card with favorite + trailer
+│   └── NavBar.jsx
+├── pages/
+│   ├── Home.jsx                    # Popular movies + search
+│   └── Favorites.jsx
+├── Services/api.js                 # TMDB requests
+├── css/                            # Stylesheets
+├── App.jsx                         # Routes
+└── main.jsx
+```
+
+## 👤 Author
+
+**Sadik Jemal** · [@sadikjemal](https://github.com/sadikjemal)
+
+<sub>This product uses the TMDB API but is not endorsed or certified by TMDB.</sub>
